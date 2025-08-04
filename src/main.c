@@ -7,21 +7,11 @@
 #include <ctype.h>
 #include "headers/fileManagement.h"
 #include "headers/sharedMacros.h"
+#include "headers/dialogue.h"
 
 int main(){
-	char filePath[LINUX_MAX];
-	strcpy(filePath, getDocumentsFolder());
-	if(filePath == "ERROR: NO VALID USER"){
-		printf("%s\n", filePath);
-		return 1;
-	}
-	printf("%s\n", filePath);
-	if(isFolderCreated(filePath) == 1){
-		printf("Glad that you have a documents folder\n");
-	}
-	strcat(filePath, "Dominus_Legends");
-	if(isFolderCreated(filePath) == ERR_NA){
-		printf("This folder is still under construction for game data\nExiting\n");
-	}	
+	getDocumentsFolder();
+	printf("%s\n", plainScriptsFilePath);
+	speakDialogue("welcome", 1);
 	return 0;
 }
