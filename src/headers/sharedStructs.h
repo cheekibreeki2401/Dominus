@@ -6,7 +6,8 @@ typedef struct plainDialogue{
 	char scriptName[256];
 	char text[256];
 	char nextDialogue[256];
-	int nextDialogueType;//1: plain, 2: choice, 3: character
+	int nextDialogueType;//1: plain, 2: choice, 3: characters
+	int displayTimeOfDialogue; //In seconds
 } plainDialogue;
 
 typedef struct choice{

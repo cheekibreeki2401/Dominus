@@ -12,6 +12,7 @@
 
 plainDialogue *plainTxt;
 
+int speakDialogue(char dialogueName[], int dialogueType);
 
 int speakPlain(char dialogueName[]){
 	FILE *plainDialogueText = fopen(plainScriptsFilePath, "r");
@@ -34,7 +35,6 @@ int speakPlain(char dialogueName[]){
 			switch (token_ctr){
 				case 0:
 					curr_id = atoi(token);
-					printf("%i\n", curr_id);
 					break;
 				case 1:
 					if(!strcmp(token, dialogueName)){
@@ -60,13 +60,21 @@ int speakPlain(char dialogueName[]){
 						plainTxt->nextDialogueType = atoi(token);
 					}
 					break;
+
+				case 5:
+					if(hasDialogue){
+						plainTxt->displayTimeOfDialogue = atoi(token);
+					}
 				}
 			token_ctr++;
 			token = strtok(NULL, "#");
 		}
 	}
 	if(hasDialogue){
-		printStaticContent();	
+		printStaticContent();
+		speakDialogue(plainTxt->nextDialogue, plainTxt->nextDialogueType);	
+	} else {
+		endTUI();
 	}
 	fclose(plainDialogueText);
 }

@@ -8,9 +8,11 @@
 #include "headers/fileManagement.h"
 #include "headers/sharedMacros.h"
 #include "headers/dialogue.h"
+#include "headers/display.h"
 
 int main(){
 	getDocumentsFolder();
+	startTUI();
 	printf("%s\n", plainScriptsFilePath);
 	speakDialogue("welcome", 1);
 	return 0;
