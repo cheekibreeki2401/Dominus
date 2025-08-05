@@ -18,6 +18,9 @@ typedef struct choice{
 	char requiredFlagName[256];
 	char nextDialogue[256];
 	int nextDialogueType;
+	int changesFlag;
+	char changedFlag[256];
+	int flagValue;
 } choice;
 
 typedef struct choiceDialogue{
@@ -27,13 +30,14 @@ typedef struct choiceDialogue{
 	char availableChoices[10][256];
 } choiceDialogue;
 
-enum gameState{
-	GM_ZERO;
-	GM_MENU;
-	GM_COMBAT;
-	GM_OVERWORLD;
-	GM_CONVERSATION;
-	GM_ERROR;
+typedef enum gameState{
+	GM_ZERO,
+	GM_MENU,
+	GM_COMBAT,
+	GM_OVERWORLD,
+	GM_CONVERSATION,
+	GM_ERROR,
+	GM_FINISH
 } gameState;
 
 #endif

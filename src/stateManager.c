@@ -25,7 +25,7 @@ void assignGameFlags(){
 	}
 	char line[STR_MAX];
 	int lineCounter = 0;
-	for(fgets(line, sizeof(line), flagsFile)){
+	while(fgets(line, sizeof(line), flagsFile)){
 		char *token = strtok(line, "#");
 		if(token!=NULL){
 			char key[STR_MAX];

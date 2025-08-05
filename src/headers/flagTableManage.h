@@ -4,7 +4,7 @@
 
 extern int size;
 extern char keys[WIN_MAX][STR_MAX];
-int values[WIN_MAX];
+extern int flags[WIN_MAX];
 
 int getKeyIndex(char key[]);
 void newFlagValue(char key[], int value);

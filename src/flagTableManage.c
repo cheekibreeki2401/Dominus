@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-
+#include "headers/sharedMacros.h"
 int size=0;
 char keys[WIN_MAX][STR_MAX];
-int values[WIN_MAX];
+int flags[WIN_MAX];
 
 int getKeyIndex(char key[]){
-	for(int = 0; i < size; i++){
+	for(int i = 0; i < size; i++){
 		if(!strcmp(keys[i], key)){
 			return i;
 		}
@@ -15,22 +15,22 @@ int getKeyIndex(char key[]){
 }
 
 void newFlagValue(char key[], int value){
-	int flagIndex = getKeyIndex(key)
+	int flagIndex = getKeyIndex(key);
 	if(flagIndex==-1){
 		strcpy(keys[size],key);
-		values[size] = value;
+		flags[size] = value;
 		size++;
 	} else {
-		values[flagIndex] = value;
+		flags[flagIndex] = value;
 	}
 }
 
 int getFlagValue(char key[]){
-	int flagIndex = getKeyIndex(key)
+	int flagIndex = getKeyIndex(key);
 	if(flagIndex == -1){
 		return -1;
 	} else {
-		return values[flagIndex];
+		return flags[flagIndex];
 	}
 }
 

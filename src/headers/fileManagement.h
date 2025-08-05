@@ -2,6 +2,9 @@
 #ifndef _fileManagement_h
 #define _fileManagement_h
 extern char plainScriptsFilePath[LINUX_MAX];
+extern char choiceScriptsFilePath[LINUX_MAX];
+extern char choicesFilePath[LINUX_MAX];
+extern char flagFilePath[LINUX_MAX];
 char *getUserName();
 int isFolderCreated(char filepath[]);
 int *getDocumentsFolder();

@@ -4,5 +4,6 @@
 void startTUI();
 void endTUI();
 void printStaticContent();
+void printChoiceContent();
 
 #endif
