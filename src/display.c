@@ -6,10 +6,12 @@
 #include "headers/sharedStructs.h"
 #include "headers/sharedMacros.h"
 #include "headers/dialogue.h"
+#include "headers/stateManager.h"
 
 WINDOW *w;
-char previousDialogue[STR_MAX][10];
+char previousDialogue[10][STR_MAX];
 int next_empty_line = 0;
+int currentChoice = 0;
 
 void startTUI(){
 	w = initscr();
@@ -27,4 +29,16 @@ void printStaticContent(){
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
 	sleep(plainTxt->displayTimeOfDialogue);
 	return;
+}
+
+void printChoiceContet(){
+	clear();
+	for(int i; i<10; i++){
+		if(previousDialogue[i] != NULL){
+			printw("%s\n", previousDialogue[i]);
+		} else {
+			break;
+		}
+	}
+	printw("%s\n\n", choiceTxt->text);
 }

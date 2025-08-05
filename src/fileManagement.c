@@ -15,6 +15,9 @@
 #include "headers/sharedMacros.h"
 
 char plainScriptsFilePath[LINUX_MAX];
+char choiceScriptsFilePath[LINUX_MAX];
+char choicesFilePath[LINUX_MAX];
+char flagFilePath[LINUX_MAX];
 
 const char *getUserName(){
 	#ifdef __linux__
@@ -45,7 +48,6 @@ int getDocumentsFolder(){
 	#ifdef __linux__
 		char fullDirectory[LINUX_MAX]="";
 		strcat(fullDirectory, "/home/");
-		printf("%s\n", fullDirectory);
 	#elif _WIN32
 		char fullDirectory[WIN_MAX];
 		strcat(fullDirectory, "C:/User/");
@@ -55,13 +57,17 @@ int getDocumentsFolder(){
 		strcat(userName, getUserName());
 		strcat(fullDirectory, userName);
 		strcat(fullDirectory, "/Documents/Dominus/data");
-		printf("%s\n", fullDirectory);
 	} else {
 		return 1;
 	}
 	strcpy(plainScriptsFilePath, fullDirectory);
+	strcpy(choiceScriptsFilePath, fullDirectory);
+	strcpy(choicesFilePath, fullDirectory);
+	strcpy(flagFilePath, fullDirectory);
 	strcat(plainScriptsFilePath, "/story_data/en_UK/script_data/plain.txt");
-	printf("%s\n", plainScriptsFilePath);
+	strcat(choiceScriptsFilePath,"/story_data/en_uk/script_data/choiceScripts.txt");
+	strcat(choicesFilePath,"/story_data/en_uk/script_data/choices.txt");
+	strcat(flagFilePath, "/game_data/FLAGS/storyFlags.txt");
 	return 0;
 }
 

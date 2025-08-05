@@ -12,9 +12,10 @@ typedef struct plainDialogue{
 
 typedef struct choice{
 	int choiceId;
+	char choiceName[256];
 	char choiceText[256];
 	int requiresFlag;
-	int requiredFlagId;
+	char requiredFlagName[256];
 	char nextDialogue[256];
 	int nextDialogueType;
 } choice;
@@ -22,7 +23,17 @@ typedef struct choice{
 typedef struct choiceDialogue{
 	int scriptId;
 	char scriptName[256];
-	choice availableChoices[10];
+	char text[256];
+	char availableChoices[10][256];
 } choiceDialogue;
+
+enum gameState{
+	GM_ZERO;
+	GM_MENU;
+	GM_COMBAT;
+	GM_OVERWORLD;
+	GM_CONVERSATION;
+	GM_ERROR;
+} gameState;
 
 #endif
