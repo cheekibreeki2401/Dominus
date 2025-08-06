@@ -1,9 +1,11 @@
 #include "sharedStructs.h"
+#include "sharedMacros.h"
 #ifndef _dialogue_h
 #define _dialogue_h
 extern plainDialogue *plainTxt;
 extern choiceDialogue *choiceTxt;
-extern choice currDecisionChoices[10];
+extern choice *currDecisionChoices[10];
+extern char lastLineUpTo[STR_MAX];
 void initializeDialogueStructs();
 int speakPlain(char dialogueName[]);
 int speakChoice(char dialogueName[]);

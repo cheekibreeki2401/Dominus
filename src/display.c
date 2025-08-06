@@ -7,17 +7,31 @@
 #include "headers/sharedMacros.h"
 #include "headers/dialogue.h"
 #include "headers/stateManager.h"
+#include "headers/fileManagement.h"
 
 WINDOW *w;
 char previousDialogue[10][STR_MAX];
 int next_empty_line = 0;
-int currentChoice = 0;
+int currentChoice = 1;
 int max_choices = 0;
+choice *notAChoice;
 
-void processInput(unsigned int input);
+void processInput(char input);
 
 void startTUI(){
 	w = initscr();
+	notAChoice=malloc(sizeof(choice));
+	notAChoice->isAChoice = 0;
+	notAChoice->choiceId = 0;
+	strcpy(notAChoice->choiceName,"ERROR");
+	strcpy(notAChoice->choiceText,"ERROR");
+	notAChoice->requiresFlag = 0;
+	strcpy(notAChoice->requiredFlagName,"Error");
+	strcpy(notAChoice->nextDialogue,"Error");
+	notAChoice->nextDialogueType = 0;
+	notAChoice->changesFlag = 0;
+	strcpy(notAChoice->changedFlag,"Error");
+	notAChoice->flagValue = 0;
 	return;
 }
 
@@ -27,60 +41,59 @@ void endTUI(){
 }
 
 void printStaticContent(){
-	memset(currDecisionChoices, 0, sizeof(currDecisionChoices));
 	max_choices = 0;
-	currentChoice = 0;
-	refresh();
-	currentChoice = 0;
-	printf("I should be seeing %s\n", plainTxt->text);
+	currentChoice = 1;
 	printw("%s\n", plainTxt->text);
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
 	next_empty_line++;
-	printf("Does this appear?\n");
-	sleep(plainTxt->displayTimeOfDialogue);
+	refresh();	
+	sleep(2);
+	speakDialogue(plainTxt->nextDialogue, plainTxt->nextDialogueType);
 }
 
 void printChoiceContent(){
 	clear();
 	max_choices = 0;
-	for(int i; i<10; i++){
-		if(previousDialogue[i] != NULL){
+	for(int i = 0; i<10; i++){
+		if(previousDialogue[i] != "\0"){
 			printw("%s\n", previousDialogue[i]);
 		} else {
 			break;
 		}
 	}
-	printw("%s\n\n", choiceTxt->scriptName);
-	for(int i; i<sizeof(currDecisionChoices)/sizeof(choice);i++){
-		max_choices++;
-		if(i == currentChoice){
-			printw(">%s\n", currDecisionChoices[i].choiceText);
-		} else {
-			printw("%s\n", currDecisionChoices[i].choiceText);
+	printw("%s\n\n", choiceTxt->text);
+	for(int i = 1; i<10;i++){
+		if(i == currentChoice && currDecisionChoices[i]->isAChoice){
+			printw(">%s\n", currDecisionChoices[i]->choiceText);
+			max_choices++;
+		} else if (currDecisionChoices[i]->isAChoice){
+			max_choices++;
+			printw("%s\n", currDecisionChoices[i]->choiceText);
 		}
 	}
-	unsigned int input;
+	char input;
+	refresh();
 	input = getch();
 	processInput(input);
 	return;
 }
 
-void processInput(unsigned int input){
+void processInput(char input){
 	switch(input){
 		case '\n':
 		case ' ':
 			//TODO: Handle flag changes from dialogue
 			memset(previousDialogue, 0, sizeof(previousDialogue));
 			next_empty_line = 0;
-			speakDialogue(currDecisionChoices[currentChoice].nextDialogue, currDecisionChoices[currentChoice].nextDialogueType);
+			speakDialogue(currDecisionChoices[currentChoice]->nextDialogue, currDecisionChoices[currentChoice]->nextDialogueType);
 			break;
-		case KEY_DOWN:
+		case 'a':
 			if(currentChoice<max_choices-1){
 				currentChoice++;
 			}
 			break;
-		case KEY_UP:
-			if(currentChoice>0){
+		case 'w':
+			if(currentChoice>1){
 				currentChoice--;
 			}
 			break;

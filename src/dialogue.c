@@ -17,12 +17,15 @@ int newDialogueStart = 0;
 char previousDialogueChain[STR_MAX];
 choice *currDecisionChoices[10];
 int numChoices = 0;
+char lastLineUpTo[STR_MAX];
+char choicesToAdd[10][STR_MAX];
 
 int speakDialogue(char dialogueName[], int dialogueType);
 
 void makeChoicesStruct(char choiceName[], int position){
 	FILE *choices = fopen(choicesFilePath, "r");
 	if(!choices){
+		strcpy(lastLineUpTo, "Didn't get any choices\n");
 		return;
 	}
 	char line[STR_MAX];
@@ -36,9 +39,7 @@ void makeChoicesStruct(char choiceName[], int position){
 		char *token=strtok(line, "#");
 		int token_ctr = 0;
 		int isChoice = 0;
-		int choiceRequiresFlag = 0;
 		int temp_token = 0;
-		int changesFlag = 0;
 		while(token != NULL){
 			switch (token_ctr){
 				case 0:
@@ -48,6 +49,8 @@ void makeChoicesStruct(char choiceName[], int position){
 					if(!strcmp(token, choiceName)){
 						next_choice->choiceId = temp_token;
 						strcpy(next_choice->choiceName,token);
+						next_choice->isAChoice = 1;
+						printf("adding choice to list\n");
 						isChoice = 1;
 					}
 					break;
@@ -60,19 +63,12 @@ void makeChoicesStruct(char choiceName[], int position){
 
 				case 3:
 					if(isChoice){
-						choiceRequiresFlag = atoi(token);
 						next_choice->requiresFlag = atoi(token);	
 					}
 					break;
 				case 4:
 					if(isChoice){
-						if(choiceRequiresFlag){
-							if(getKeyIndex(token) != -1 && getFlagValue(token)){
-								strcpy(next_choice->requiredFlagName, token);
-							} else {
-								isChoice==0;
-							}
-						}
+						strcpy(next_choice->requiredFlagName, token);
 					}
 					break;
 				case 5:
@@ -88,16 +84,15 @@ void makeChoicesStruct(char choiceName[], int position){
 				case 7:
 					if(isChoice){
 						next_choice->changesFlag = atoi(token);
-						changesFlag = next_choice->changesFlag;
 					}
 					break;
 				case 8:
-					if(isChoice && changesFlag){
+					if(isChoice){
 						strcpy(next_choice->changedFlag, token);
 					}
 					break;
 				case 9:
-					if(isChoice && changesFlag){
+					if(isChoice){
 						next_choice->flagValue = atoi(token);
 					}
 					break;
@@ -107,8 +102,9 @@ void makeChoicesStruct(char choiceName[], int position){
 		}
 		if(isChoice){
 			currDecisionChoices[position] = next_choice;
+			strcat(lastLineUpTo, currDecisionChoices[position]->choiceName);
+			strcat(lastLineUpTo, " ");
 			choiceAdded = 1;
-			numChoices++;
 		}
 	}
 	fclose(choices);
@@ -125,10 +121,8 @@ int speakPlain(char dialogueName[]){
 	if(!strcmp(dialogueName, "EXIT") && newDialogueStart){
 		speakDialogue(previousDialogueChain, 1);
 	}
-	printf("%s\n",plainScriptsFilePath);
 	FILE *plainDialogueText = fopen(plainScriptsFilePath, "r");
 	if(!plainDialogueText){
-		printf("No plain dialogue text found\n");
 		return 1;
 	}
 	char line[STR_MAX];
@@ -153,38 +147,31 @@ int speakPlain(char dialogueName[]){
 							newDialogueStart = 1;
 							strcpy(previousDialogueChain,dialogueName);
 						}
-						printf("%i\n", curr_id);
 						plainTxt->scriptId = curr_id;
-						printf("It's not the script id\n");
 						strcpy(plainTxt->scriptName, token);
-						printf("I don't even fuckin' know anymore\n");
 					}
 					break;
 				case 2:
 					if(hasDialogue){
 						strcpy(plainTxt->text, token);
-						printf("It's not the text\n");
 					}
 					break;
 				case 3:
 					//finish struct
 					if(hasDialogue){
 						strcpy(plainTxt->nextDialogue, token);
-						printf("It's not the pointing to next dialogue\n");
 					}
 					break;
 				case 4:
 					//finish struct
 					if(hasDialogue){
 						plainTxt->nextDialogueType = atoi(token);
-						printf("It's not the next dialogue type\n");
 					}
 					break;
 
 				case 5:
 					if(hasDialogue){
 						plainTxt->displayTimeOfDialogue = atoi(token);
-						printf("It's not the feckin timer\n");
 					}
 				}
 			token_ctr++;
@@ -192,11 +179,8 @@ int speakPlain(char dialogueName[]){
 		}
 	}
 	if(hasDialogue){
-		printf("I am still printing %s\n", plainTxt->scriptName);
-		printStaticContent();
-		printf("I am finished printing %s\n", plainTxt->scriptName);
 		fclose(plainDialogueText);
-		speakDialogue(plainTxt->nextDialogue, plainTxt->nextDialogueType);	
+		printStaticContent();
 	} else {
 		fclose(plainDialogueText);
 		endTUI();
@@ -207,6 +191,7 @@ int speakChoice(char dialogueName[]){
 	//TODO: Dialogue choices
 	FILE *choicesTextFile = fopen(choiceScriptsFilePath, "r");
 	if(!choicesTextFile){
+		printf("\n\nI have a choice dialogue: %s", choiceScriptsFilePath);
 		return 1;
 	}		
 	char line[STR_MAX];
@@ -238,7 +223,8 @@ int speakChoice(char dialogueName[]){
 					break;
 				default:
 					if(hasDialogue){
-						makeChoicesStruct(token, numChoices);
+						strcpy(choicesToAdd[numChoices],token);
+						numChoices++;
 					}
 			}
 			token_ctr++;
@@ -246,6 +232,9 @@ int speakChoice(char dialogueName[]){
 		}
 	}
 	if(hasDialogue){
+		for(int i = 0; i < numChoices; i++){
+			makeChoicesStruct(choicesToAdd[i], i+1);
+		}
 		fclose(choicesTextFile);
 		printChoiceContent();
 	}else{		
@@ -254,7 +243,10 @@ int speakChoice(char dialogueName[]){
 }
 
 int speakDialogue(char dialogueName[], int dialogueType){
-	printf("Currently printing %s\n", dialogueName);
+	for(int i = 0; i < 10; i++){
+		currDecisionChoices[i] = notAChoice;
+	}
+	currDecisionChoices[0]->isAChoice = 0;
 	if(dialogueType == 1){
 		speakPlain(dialogueName);
 	} else if(dialogueType == 2){

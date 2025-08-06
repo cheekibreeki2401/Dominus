@@ -11,6 +11,7 @@ typedef struct plainDialogue{
 } plainDialogue;
 
 typedef struct choice{
+	int isAChoice;
 	int choiceId;
 	char choiceName[256];
 	char choiceText[256];
@@ -21,6 +22,7 @@ typedef struct choice{
 	int changesFlag;
 	char changedFlag[256];
 	int flagValue;
+
 } choice;
 
 typedef struct choiceDialogue{

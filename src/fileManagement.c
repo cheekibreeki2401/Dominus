@@ -65,8 +65,8 @@ int getDocumentsFolder(){
 	strcpy(choicesFilePath, fullDirectory);
 	strcpy(flagFilePath, fullDirectory);
 	strcat(plainScriptsFilePath, "/story_data/en_UK/script_data/plain.txt");
-	strcat(choiceScriptsFilePath,"/story_data/en_uk/script_data/choiceScripts.txt");
-	strcat(choicesFilePath,"/story_data/en_uk/script_data/choices.txt");
+	strcat(choiceScriptsFilePath,"/story_data/en_UK/script_data/choiceScripts.txt");
+	strcat(choicesFilePath,"/story_data/en_UK/script_data/choices.txt");
 	strcat(flagFilePath, "/game_data/FLAGS/storyFlags.txt");
 	return 0;
 }

@@ -16,6 +16,5 @@ int main(){
 	startTUI();
 	printf("%s\n", plainScriptsFilePath);
 	speakDialogue("welcome", 1);
-	endTUI();
 	return 0;
 }
