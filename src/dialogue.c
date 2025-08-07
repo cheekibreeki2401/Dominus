@@ -233,7 +233,7 @@ int speakChoice(char dialogueName[]){
 	}
 	if(hasDialogue){
 		for(int i = 0; i < numChoices; i++){
-			makeChoicesStruct(choicesToAdd[i], i+1);
+			makeChoicesStruct(choicesToAdd[i], i);
 		}
 		fclose(choicesTextFile);
 		printChoiceContent();

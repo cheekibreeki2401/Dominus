@@ -12,7 +12,7 @@
 WINDOW *w;
 char previousDialogue[10][STR_MAX];
 int next_empty_line = 0;
-int currentChoice = 1;
+int currentChoice = 0;
 int max_choices = 0;
 choice *notAChoice;
 
@@ -32,6 +32,9 @@ void startTUI(){
 	notAChoice->changesFlag = 0;
 	strcpy(notAChoice->changedFlag,"Error");
 	notAChoice->flagValue = 0;
+	for(int i = 0; i < 10; i++){
+		strcpy(previousDialogue[i], "\0");
+	}
 	return;
 }
 
@@ -42,7 +45,7 @@ void endTUI(){
 
 void printStaticContent(){
 	max_choices = 0;
-	currentChoice = 1;
+	currentChoice = 0;
 	printw("%s\n", plainTxt->text);
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
 	next_empty_line++;
@@ -55,14 +58,14 @@ void printChoiceContent(){
 	clear();
 	max_choices = 0;
 	for(int i = 0; i<10; i++){
-		if(previousDialogue[i] != "\0"){
+		if(strcmp(previousDialogue[i],"\0")){
 			printw("%s\n", previousDialogue[i]);
 		} else {
 			break;
 		}
 	}
 	printw("%s\n\n", choiceTxt->text);
-	for(int i = 1; i<10;i++){
+	for(int i = 0; i<10;i++){
 		if(i == currentChoice && currDecisionChoices[i]->isAChoice){
 			printw(">%s\n", currDecisionChoices[i]->choiceText);
 			max_choices++;
@@ -71,6 +74,9 @@ void printChoiceContent(){
 			printw("%s\n", currDecisionChoices[i]->choiceText);
 		}
 	}
+	printw("Current max choices: %d\n", max_choices);
+	printw("This should say \"controls\": %s\n", currDecisionChoices[2]->choiceText);
+	printw("%s\n", lastLineUpTo);
 	char input;
 	refresh();
 	input = getch();
@@ -82,18 +88,21 @@ void processInput(char input){
 	switch(input){
 		case '\n':
 		case ' ':
+			clear();
 			//TODO: Handle flag changes from dialogue
-			memset(previousDialogue, 0, sizeof(previousDialogue));
+			for(int i = 0; i < 10; i++){
+				strcpy(previousDialogue[i], "\0");
+			}
 			next_empty_line = 0;
 			speakDialogue(currDecisionChoices[currentChoice]->nextDialogue, currDecisionChoices[currentChoice]->nextDialogueType);
 			break;
-		case 'a':
+		case 's':
 			if(currentChoice<max_choices-1){
 				currentChoice++;
 			}
 			break;
 		case 'w':
-			if(currentChoice>1){
+			if(currentChoice>0){
 				currentChoice--;
 			}
 			break;
