@@ -102,8 +102,6 @@ void makeChoicesStruct(char choiceName[], int position){
 		}
 		if(isChoice){
 			currDecisionChoices[position] = next_choice;
-			strcat(lastLineUpTo, currDecisionChoices[position]->choiceName);
-			strcat(lastLineUpTo, " ");
 			choiceAdded = 1;
 		}
 	}
@@ -193,17 +191,23 @@ int speakChoice(char dialogueName[]){
 	if(!choicesTextFile){
 		printf("\n\nI have a choice dialogue: %s", choiceScriptsFilePath);
 		return 1;
-	}		
+	}
+	strcpy(lastLineUpTo, "");	
 	char line[STR_MAX];
 	int hasDialogue = 0;
+	numChoices = 0;
 	char newDialogueLine[STR_MAX] = "";
 	while(fgets(line, sizeof(line), choicesTextFile)){	
 		if(hasDialogue){
 			break;
 		}
-		char *token = strtok(line, "#");
+		char lineToBreak[STR_MAX];
+		strcpy(lineToBreak, line);
+		strcat(lastLineUpTo, line);
+		strcat(lastLineUpTo, " ");
 		int token_ctr = 0;
 		int curr_id = 0;
+		char *token = strtok(lineToBreak, "#");	
 		while(token!=NULL){
 			switch(token_ctr){
 				case 0:
@@ -232,7 +236,7 @@ int speakChoice(char dialogueName[]){
 		}
 	}
 	if(hasDialogue){
-		for(int i = 0; i < numChoices; i++){
+	for(int i = 0; i < numChoices; i++){
 			makeChoicesStruct(choicesToAdd[i], i);
 		}
 		fclose(choicesTextFile);
@@ -243,6 +247,10 @@ int speakChoice(char dialogueName[]){
 }
 
 int speakDialogue(char dialogueName[], int dialogueType){
+	if(!strcmp(dialogueName, "quit_game")){
+		endTUI();
+		return 0;
+	}
 	for(int i = 0; i < 10; i++){
 		currDecisionChoices[i] = notAChoice;
 	}

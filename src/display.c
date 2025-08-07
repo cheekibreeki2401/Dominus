@@ -74,9 +74,6 @@ void printChoiceContent(){
 			printw("%s\n", currDecisionChoices[i]->choiceText);
 		}
 	}
-	printw("Current max choices: %d\n", max_choices);
-	printw("This should say \"controls\": %s\n", currDecisionChoices[2]->choiceText);
-	printw("%s\n", lastLineUpTo);
 	char input;
 	refresh();
 	input = getch();
