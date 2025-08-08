@@ -6,6 +6,7 @@ extern plainDialogue *plainTxt;
 extern choiceDialogue *choiceTxt;
 extern choice *currDecisionChoices[10];
 extern char lastLineUpTo[STR_MAX];
+extern int numChoices;
 void initializeDialogueStructs();
 int speakPlain(char dialogueName[]);
 int speakChoice(char dialogueName[]);

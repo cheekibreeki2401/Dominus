@@ -50,7 +50,7 @@ void printStaticContent(){
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
 	next_empty_line++;
 	refresh();	
-	sleep(2);
+	sleep(plainTxt->displayTimeOfDialogue);
 	speakDialogue(plainTxt->nextDialogue, plainTxt->nextDialogueType);
 }
 
@@ -64,7 +64,7 @@ void printChoiceContent(){
 			break;
 		}
 	}
-	printw("%s\n\n", choiceTxt->text);
+	printw("\n\n%s\n\n", choiceTxt->text);
 	for(int i = 0; i<10;i++){
 		if(i == currentChoice && currDecisionChoices[i]->isAChoice){
 			printw(">%s\n", currDecisionChoices[i]->choiceText);
