@@ -13,7 +13,7 @@
 
 gameState curr_state = GM_ZERO;
 
-void changeGameState(gameState newState){
+void changedGameState(gameState newState){
 	curr_state = newState;
 	return;
 }
@@ -24,7 +24,6 @@ void assignGameFlags(){
 		return;
 	}
 	char line[STR_MAX];
-	int lineCounter = 0;
 	while(fgets(line, sizeof(line), flagsFile)){
 		char *token = strtok(line, "#");
 		if(token!=NULL){
@@ -36,4 +35,5 @@ void assignGameFlags(){
 		}		
 	}
 	fclose(flagsFile);
+	return;
 }

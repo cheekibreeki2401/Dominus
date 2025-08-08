@@ -9,12 +9,18 @@
 #include "headers/sharedMacros.h"
 #include "headers/dialogue.h"
 #include "headers/display.h"
+#include "headers/stateManager.h"
 
 int main(){
 	getDocumentsFolder();
 	initializeDialogueStructs();
 	startTUI();
-	printf("%s\n", plainScriptsFilePath);
-	speakDialogue("welcome", 1);
+	strcpy(nextChoiceName, "welcome");
+	gameState initState = GM_MENU;
+	changedGameState(initState);
+	while(curr_state != GM_FINISH){
+		speakDialogue(nextChoiceName, nextChoiceType);
+	}
+	endTUI();
 	return 0;
 }

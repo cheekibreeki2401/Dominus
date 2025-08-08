@@ -10,6 +10,7 @@
 #include "headers/sharedStructs.h"
 #include "headers/display.h"
 #include "headers/flagTableManage.h"
+#include "headers/stateManager.h"
 
 plainDialogue *plainTxt;
 choiceDialogue *choiceTxt;
@@ -20,8 +21,10 @@ int numChoices = 0;
 char lastLineUpTo[STR_MAX];
 char choicesToAdd[10][STR_MAX];
 int potentialChoices = 0;
+int nextChoiceType = 1;
+char nextChoiceName[STR_MAX];
 
-int speakDialogue(char dialogueName[], int dialogueType);
+void speakDialogue(char dialogueName[], int dialogueType);
 
 void makeChoicesStruct(char choiceName[], int position){
 	FILE *choices = fopen(choicesFilePath, "r");
@@ -122,13 +125,13 @@ void initializeDialogueStructs(){
 	return;
 }
 
-int speakPlain(char dialogueName[]){
+void speakPlain(char dialogueName[]){
 	if(!strcmp(dialogueName, "EXIT") && newDialogueStart){
 		speakDialogue(previousDialogueChain, 1);
 	}
 	FILE *plainDialogueText = fopen(plainScriptsFilePath, "r");
 	if(!plainDialogueText){
-		return 1;
+		return;
 	}
 	char line[STR_MAX];
 	int hasDialogue = 0;
@@ -164,12 +167,14 @@ int speakPlain(char dialogueName[]){
 					//finish struct
 					if(hasDialogue){
 						strcpy(plainTxt->nextDialogue, token);
+						strcpy(nextChoiceName, token);
 					}
 					break;
 				case 4:
 					//finish struct
 					if(hasDialogue){
 						plainTxt->nextDialogueType = atoi(token);
+						nextChoiceType = atoi(token);
 					}
 					break;
 
@@ -187,16 +192,16 @@ int speakPlain(char dialogueName[]){
 		printStaticContent();
 	} else {
 		fclose(plainDialogueText);
-		endTUI();
 	}
+	return;
 }
 
-int speakChoice(char dialogueName[]){
+void speakChoice(char dialogueName[]){
 	//TODO: Dialogue choices
 	FILE *choicesTextFile = fopen(choiceScriptsFilePath, "r");
 	if(!choicesTextFile){
 		printf("\n\nI have a choice dialogue: %s", choiceScriptsFilePath);
-		return 1;
+		return;
 	}
 	char line[STR_MAX];
 	int hasDialogue = 0;
@@ -246,13 +251,15 @@ int speakChoice(char dialogueName[]){
 		printChoiceContent();
 	}else{		
 		fclose(choicesTextFile);
-	}	
+	}
+	return;	
 }
 
-int speakDialogue(char dialogueName[], int dialogueType){
+void speakDialogue(char dialogueName[], int dialogueType){
 	if(dialogueType == 9){
-		endTUI();
-		exit(1);
+		gameState finishGame = GM_FINISH;
+		changedGameState(finishGame);
+		return;
 	}
 	for(int i = 0; i < 10; i++){
 		currDecisionChoices[i] = notAChoice;
@@ -263,4 +270,5 @@ int speakDialogue(char dialogueName[], int dialogueType){
 	} else if(dialogueType == 2){
 		speakChoice(dialogueName);
 	}
+	return;
 }

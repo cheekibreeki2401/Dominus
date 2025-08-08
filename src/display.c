@@ -51,7 +51,7 @@ void printStaticContent(){
 	next_empty_line++;
 	refresh();	
 	sleep(plainTxt->displayTimeOfDialogue);
-	speakDialogue(plainTxt->nextDialogue, plainTxt->nextDialogueType);
+	return;
 }
 
 void printChoiceContent(){
@@ -91,7 +91,9 @@ void processInput(char input){
 				strcpy(previousDialogue[i], "\0");
 			}
 			next_empty_line = 0;
-			speakDialogue(currDecisionChoices[currentChoice]->nextDialogue, currDecisionChoices[currentChoice]->nextDialogueType);
+			strcpy(nextChoiceName, currDecisionChoices[currentChoice]->nextDialogue);
+			nextChoiceType = currDecisionChoices[currentChoice]->nextDialogueType;
+			return;
 			break;
 		case 's':
 			if(currentChoice<max_choices-1){

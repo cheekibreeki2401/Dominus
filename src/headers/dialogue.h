@@ -7,9 +7,11 @@ extern choiceDialogue *choiceTxt;
 extern choice *currDecisionChoices[10];
 extern char lastLineUpTo[STR_MAX];
 extern int numChoices;
+extern char nextChoiceName[STR_MAX];
+extern int nextChoiceType;
 void initializeDialogueStructs();
-int speakPlain(char dialogueName[]);
-int speakChoice(char dialogueName[]);
-int speakDialogue(char dialogueName[], int dialogueType);
+void speakPlain(char dialogueName[]);
+void speakChoice(char dialogueName[]);
+void speakDialogue(char dialogueName[], int dialogueType);
 
 #endif
