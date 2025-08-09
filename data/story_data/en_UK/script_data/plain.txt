@@ -1,0 +1,16 @@
+0#error#This is a default message that should not appear#EXIT#1#10#
+1#welcome#Welcome to Dominus#main_menu#2#2#
+2#new_game#...#new_game_1#1#2#
+3#quit_game#Quit Game#error#1#1#
+4#control_menu#CONTROLS#control_screen#2#1#
+5#new_game_1#The world of the gods is waning...#new_game_2#1#5#
+6#new_game_2#The worship of mortals no longer powers us...#new_game_3#1#5#
+7#new_game_3#We need you, custodian...#new_game_4#1#5#
+8#new_game_4#Wake up... Dominus#waking_choice#2#5#
+9#world_of_gods_1#Good... you have awoken#world_of_gods_2#1#3#
+10#angered_gods#Perhaps we put too much faith into this one...#quit_game#9#5#
+11#world_of_gods_2#You awaken in a temple, the nexus of worlds#world_of_gods_3#1#5#
+12#world_of_gods_3#Standing before you is 3 other gods, the ones that helped shape the world you are a custodian of.#world_of_gods_4#1#7#
+13#world_of_gods_4#One in red armour, carrying a rather large blade, gleaming with a bright steel.#world_of_gods_5#1#7#
+14#world_of_gods_5#One robed in blue silk, a feminine figure adorned with skulls from her belt.#world_of_gods_6#1#7#
+15#world_of_gods_6#And the last, one with minimum clothing held together by green belts steps forward taking off her goggles#millis_waking#3#7#

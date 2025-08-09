@@ -1,0 +1,8 @@
+-1# Choice Name # Choice Text # Required Choice (0=No) # Required Choice Name # Required Choice Value # Next Dialogue # Next Dialogue Type # Changes Flag (0=NO) # Changed Flag Name # New Flag Value #
+0#exit#End Dialogue#0#ALWAYS_TRUE#1#EXIT#1#0#ALWAYS_TRUE#1#
+1#new_save#New Game#0#ALWAYS_TRUE#1#new_game#1#0#ALWAYS_TRUE#1#
+2#load_game#Load Game#1#SAVE_PRESENT#1#save_pick#2#0#ALWAYS_TRUE#1#
+3#controls#Controls#0#ALWAYS_TRUE#1#control_menu#1#0#ALWAYS_TRUE#1#
+4#quit#Quit Game#0#ALWAYS_TRUE#1#quit_game#1#0#ALWAYS_TRUE#1#
+5#wake#Wake up to the voice#0#ALWAYS_TRUE#1#world_of_gods_1#1#0#ALWAYS_TRUE#1#
+6#slumber#Continue to sleep#0#ALWAYS_TRUE#1#angered_gods#1#0#ALWAYS_TRUE#1#

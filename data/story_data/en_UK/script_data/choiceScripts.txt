@@ -1,0 +1,4 @@
+0#default#this should not appear#exit
+1#main_menu#Select your option:#new_save#load_game#controls#END
+2#control_screen#To play Domninus, use the W and S keys to highlight choices, press enter or space to select them. To bring up the menu, press esc.#exit#END
+3#waking_choice#What will you do?#wake#slumber#END
