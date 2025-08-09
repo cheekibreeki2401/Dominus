@@ -14,6 +14,7 @@
 
 plainDialogue *plainTxt;
 choiceDialogue *choiceTxt;
+speakerDialogue *speaker;
 int newDialogueStart = 0;
 char previousDialogueChain[STR_MAX];
 choice *currDecisionChoices[10];
@@ -122,12 +123,15 @@ void makeChoicesStruct(char choiceName[], int position){
 void initializeDialogueStructs(){
 	plainTxt=malloc(sizeof(plainDialogue));
 	choiceTxt=malloc(sizeof(choiceDialogue));
+	speaker=malloc(sizeof(speakerDialogue));
 	return;
 }
 
 void speakPlain(char dialogueName[]){
 	if(!strcmp(dialogueName, "EXIT") && newDialogueStart){
-		speakDialogue(previousDialogueChain, 1);
+		strcpy(nextChoiceName, previousDialogueChain);
+		nextChoiceType = 1;
+		return;
 	}
 	FILE *plainDialogueText = fopen(plainScriptsFilePath, "r");
 	if(!plainDialogueText){
@@ -255,6 +259,113 @@ void speakChoice(char dialogueName[]){
 	return;	
 }
 
+void speakSpeaker(char dialogueName[]){
+	FILE *speakerDialogueFile = fopen(speakerScriptsFilePath, "r");
+	if(!speakerDialogueFile){
+		strcpy(lastLineUpTo, "I have failed in getting the speaker file\n");
+		return;
+	}
+	char line[STR_MAX*2];
+	int hasDialogue = 0;
+	while(fgets(line, sizeof(line), speakerDialogueFile)){
+		if(hasDialogue){
+			break;
+		}
+		char lineToBreak[STR_MAX*2];
+		char flagName[STR_MAX];
+		int flagValue = 0;
+		int useAltText = 0;
+		strcpy(lineToBreak, line);
+		int token_ctr = 0;
+		int curr_id = 0;
+		char *token = strtok(lineToBreak, "#");
+		while(token!=NULL){
+			switch(token_ctr){
+				case 0:
+					curr_id = atoi(token);
+					break;
+				case 1:
+					if(!strcmp(dialogueName, token)){
+						hasDialogue = 1;
+						strcat(lastLineUpTo, token);
+						speaker->scriptId = curr_id;
+						strcpy(speaker->scriptName, token);
+					}
+					break;
+				case 2:
+					if(hasDialogue){
+						strcat(lastLineUpTo, token);
+						strcpy(speaker->speakerName, token);
+					}
+					break;
+				case 3:
+					if(hasDialogue){
+						strcpy(speaker->colour, token);
+					}
+					break;
+				case 4:
+					if(hasDialogue){
+						strcpy(speaker->text, token);
+					}
+					break;
+				case 5:
+					if(hasDialogue){
+						speaker->displayTimeOfDialogue = atoi(token);
+					}
+					break;
+				case 6:
+					if(hasDialogue){
+						strcpy(flagName, token);
+					}
+					break;
+				case 7:
+					if(hasDialogue){
+						flagValue = atoi(token);
+					}
+					break;
+				case 8:
+					if(hasDialogue && getFlagValue(flagName) == flagValue){
+						useAltText = 1;
+						strcpy(speaker->text, token);	
+					}
+					break;
+				case 9:
+					if(hasDialogue && !useAltText){
+						strcpy(speaker->nextScriptName, token);
+						strcpy(nextChoiceName, token);
+					}
+					break;
+				case 10:
+					if(hasDialogue && !useAltText){
+						speaker->nextScriptType = atoi(token);
+						nextChoiceType = atoi(token);
+					}
+					break;
+				case 11:
+					if(hasDialogue && useAltText){
+						strcpy(speaker->nextScriptName, token);
+						strcpy(nextChoiceName, token);
+					}
+					break;
+				case 12:
+					if(hasDialogue && useAltText){
+						speaker->nextScriptType = atoi(token);
+						nextChoiceType = atoi(token);
+					}
+					break;
+			}
+			token_ctr++;
+			token = strtok(NULL, "#");
+		}
+	}
+	if(hasDialogue){
+		fclose(speakerDialogueFile);
+		printSpeakerContent();
+	} else {
+		fclose(speakerDialogueFile);
+	}
+}
+
 void speakDialogue(char dialogueName[], int dialogueType){
 	if(dialogueType == 9){
 		gameState finishGame = GM_FINISH;
@@ -269,6 +380,8 @@ void speakDialogue(char dialogueName[], int dialogueType){
 		speakPlain(dialogueName);
 	} else if(dialogueType == 2){
 		speakChoice(dialogueName);
+	} else if(dialogueType == 3){
+		speakSpeaker(dialogueName);
 	}
 	return;
 }

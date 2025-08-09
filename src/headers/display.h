@@ -7,5 +7,6 @@ void startTUI();
 void endTUI();
 void printStaticContent();
 void printChoiceContent();
+void printSpeakerContent();
 
 #endif

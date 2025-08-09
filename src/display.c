@@ -18,8 +18,16 @@ choice *notAChoice;
 
 void processInput(char input);
 
+void setColours(){
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLACK);
+	init_pair(3, COLOR_BLUE, COLOR_BLACK);
+	return;
+}
+
 void startTUI(){
 	w = initscr();
+	start_color();
 	notAChoice=malloc(sizeof(choice));
 	notAChoice->isAChoice = 0;
 	notAChoice->choiceId = 0;
@@ -35,6 +43,7 @@ void startTUI(){
 	for(int i = 0; i < 10; i++){
 		strcpy(previousDialogue[i], "\0");
 	}
+	setColours();
 	return;
 }
 
@@ -45,6 +54,7 @@ void endTUI(){
 
 void printStaticContent(){
 	max_choices = 0;
+	wattron(w, COLOR_PAIR(0));
 	currentChoice = 0;
 	printw("%s\n", plainTxt->text);
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
@@ -56,6 +66,7 @@ void printStaticContent(){
 
 void printChoiceContent(){
 	clear();
+	wattron(w, COLOR_PAIR(0));
 	max_choices = 0;
 	for(int i = 0; i<10; i++){
 		if(strcmp(previousDialogue[i],"\0")){
@@ -107,4 +118,25 @@ void processInput(char input){
 			break;
 	}
 	printChoiceContent();
+}
+
+void printSpeakerContent(){
+	max_choices = 0;
+	if(!strcmp(speaker->colour,"GREEN")){
+		wattron(w, COLOR_PAIR(1));
+	} else if(!strcmp(speaker->colour,"RED")){
+		wattron(w, COLOR_PAIR(2));
+	} else if(!strcmp(speaker->colour, "BLUE")){
+		wattron(w, COLOR_PAIR(3));
+	} else {
+		wattron(w, COLOR_PAIR(0));
+	}
+	currentChoice = 0;
+	printw("%s: %s\n", speaker->speakerName, speaker->text);
+//	printw("%s\n", lastLineUpTo);
+	strcpy(previousDialogue[next_empty_line], speaker->text);
+	next_empty_line++;
+	refresh();	
+	sleep(speaker->displayTimeOfDialogue);
+	return;
 }

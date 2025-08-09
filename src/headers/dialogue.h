@@ -4,6 +4,7 @@
 #define _dialogue_h
 extern plainDialogue *plainTxt;
 extern choiceDialogue *choiceTxt;
+extern speakerDialogue *speaker;
 extern choice *currDecisionChoices[10];
 extern char lastLineUpTo[STR_MAX];
 extern int numChoices;

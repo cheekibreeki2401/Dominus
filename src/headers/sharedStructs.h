@@ -32,6 +32,17 @@ typedef struct choiceDialogue{
 	char availableChoices[10][256];
 } choiceDialogue;
 
+typedef struct speakerDialogue{
+	int scriptId;
+	char scriptName[256];
+	char speakerName[256];
+	char colour[256];
+	char text[256];
+	int displayTimeOfDialogue;
+	char nextScriptName[256];
+	int nextScriptType;
+} speakerDialogue;
+
 typedef enum gameState{
 	GM_ZERO,
 	GM_MENU,
