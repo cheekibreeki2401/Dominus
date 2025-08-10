@@ -22,6 +22,7 @@ void setColours(){
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 	init_pair(2, COLOR_RED, COLOR_BLACK);
 	init_pair(3, COLOR_BLUE, COLOR_BLACK);
+	init_pair(4, COLOR_WHITE, COLOR_BLACK);
 	return;
 }
 
@@ -52,9 +53,14 @@ void endTUI(){
 	return;
 }
 
-void printStaticContent(){
+void printStaticContent(int clear){
+	if(clear){
+		clear();
+		return;
+	}
+	newDialogueStart = 1;
 	max_choices = 0;
-	wattron(w, COLOR_PAIR(0));
+	wattron(w, COLOR_PAIR(4));
 	currentChoice = 0;
 	printw("%s\n", plainTxt->text);
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
@@ -66,7 +72,7 @@ void printStaticContent(){
 
 void printChoiceContent(){
 	clear();
-	wattron(w, COLOR_PAIR(0));
+	wattron(w, COLOR_PAIR(4));
 	max_choices = 0;
 	for(int i = 0; i<10; i++){
 		if(strcmp(previousDialogue[i],"\0")){
@@ -104,6 +110,7 @@ void processInput(char input){
 			next_empty_line = 0;
 			strcpy(nextChoiceName, currDecisionChoices[currentChoice]->nextDialogue);
 			nextChoiceType = currDecisionChoices[currentChoice]->nextDialogueType;
+			newDialogueStart = 0;
 			return;
 			break;
 		case 's':

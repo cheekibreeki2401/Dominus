@@ -10,6 +10,8 @@ extern char lastLineUpTo[STR_MAX];
 extern int numChoices;
 extern char nextChoiceName[STR_MAX];
 extern int nextChoiceType;
+extern int newDialogueStart;
+
 void initializeDialogueStructs();
 void speakPlain(char dialogueName[]);
 void speakChoice(char dialogueName[]);

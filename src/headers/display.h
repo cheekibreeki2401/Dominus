@@ -5,7 +5,7 @@ extern choice *notAChoice;
 
 void startTUI();
 void endTUI();
-void printStaticContent();
+void printStaticContent(int clear);
 void printChoiceContent();
 void printSpeakerContent();
 

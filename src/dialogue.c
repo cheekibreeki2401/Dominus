@@ -128,9 +128,9 @@ void initializeDialogueStructs(){
 }
 
 void speakPlain(char dialogueName[]){
-	if(!strcmp(dialogueName, "EXIT") && newDialogueStart){
-		strcpy(nextChoiceName, previousDialogueChain);
-		nextChoiceType = 1;
+	if(!strcmp(dialogueName, "EXIT") && !newDialogueStart){
+		returnToPreviousDialogue();
+		printStaticContent(1);
 		return;
 	}
 	FILE *plainDialogueText = fopen(plainScriptsFilePath, "r");
@@ -154,9 +154,12 @@ void speakPlain(char dialogueName[]){
 				case 1:
 					if(!strcmp(token, dialogueName)){
 						hasDialogue = 1;
-						if(!newDialogueStart){
+						if(!newDialogueStart && currentEmptyDialogue > 0 && strcmp(previousDialogues[currentEmptyDialogue-1], dialogueName)){
 							newDialogueStart = 1;
-							strcpy(previousDialogueChain,dialogueName);
+							addNewPrevious(token);
+						} else if(currentEmptyDialogue == 0){
+							addNewPrevious(token);
+							newDialogueStart = 1;
 						}
 						plainTxt->scriptId = curr_id;
 						strcpy(plainTxt->scriptName, token);
@@ -193,7 +196,7 @@ void speakPlain(char dialogueName[]){
 	}
 	if(hasDialogue){
 		fclose(plainDialogueText);
-		printStaticContent();
+		printStaticContent(0);
 	} else {
 		fclose(plainDialogueText);
 	}
@@ -206,6 +209,9 @@ void speakChoice(char dialogueName[]){
 	if(!choicesTextFile){
 		printf("\n\nI have a choice dialogue: %s", choiceScriptsFilePath);
 		return;
+	}
+	for(int i = 0; i < 10; i++){
+		strcpy(choicesToAdd[i], "NA");
 	}
 	char line[STR_MAX];
 	int hasDialogue = 0;
