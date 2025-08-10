@@ -10,7 +10,8 @@
 #include "headers/fileManagement.h"
 
 WINDOW *w;
-char previousDialogue[10][STR_MAX];
+char previousDialogue[20][STR_MAX];
+char previousColors[20][STR_MAX];
 int next_empty_line = 0;
 int currentChoice = 0;
 int max_choices = 0;
@@ -64,6 +65,7 @@ void printStaticContent(int clear){
 	currentChoice = 0;
 	printw("%s\n", plainTxt->text);
 	strcpy(previousDialogue[next_empty_line], plainTxt->text);
+	strcpy(previousColors[next_empty_line], "WHITE");
 	next_empty_line++;
 	refresh();	
 	sleep(plainTxt->displayTimeOfDialogue);
@@ -72,15 +74,24 @@ void printStaticContent(int clear){
 
 void printChoiceContent(){
 	clear();
-	wattron(w, COLOR_PAIR(4));
 	max_choices = 0;
 	for(int i = 0; i<10; i++){
 		if(strcmp(previousDialogue[i],"\0")){
+			if(!strcmp(previousColors[i],"GREEN")){
+				wattron(w, COLOR_PAIR(1));
+			} else if (!strcmp(previousColors[i], "RED")){
+				wattron(w, COLOR_PAIR(2));
+			} else if(!strcmp(previousColors[i], "BLUE")){
+				wattron(w, COLOR_PAIR(3));
+			} else {
+				wattron(w, COLOR_PAIR(4));
+			}
 			printw("%s\n", previousDialogue[i]);
 		} else {
 			break;
 		}
 	}
+	wattron(w, COLOR_PAIR(4));
 	printw("\n\n%s\n\n", choiceTxt->text);
 	for(int i = 0; i<10;i++){
 		if(i == currentChoice && currDecisionChoices[i]->isAChoice){
@@ -104,8 +115,9 @@ void processInput(char input){
 		case ' ':
 			clear();
 			//TODO: Handle flag changes from dialogue
-			for(int i = 0; i < 10; i++){
+			for(int i = 0; i < 20; i++){
 				strcpy(previousDialogue[i], "\0");
+				strcpy(previousColors[i], "\0");
 			}
 			next_empty_line = 0;
 			strcpy(nextChoiceName, currDecisionChoices[currentChoice]->nextDialogue);
@@ -138,10 +150,14 @@ void printSpeakerContent(){
 	} else {
 		wattron(w, COLOR_PAIR(0));
 	}
+	char fullLine[STR_MAX];
+	strcpy(fullLine, speaker->speakerName);
+	strcat(fullLine, ": ");
+	strcat(fullLine, speaker->text);
 	currentChoice = 0;
-	printw("%s: %s\n", speaker->speakerName, speaker->text);
-//	printw("%s\n", lastLineUpTo);
-	strcpy(previousDialogue[next_empty_line], speaker->text);
+	printw("%s\n", fullLine);
+	strcpy(previousDialogue[next_empty_line], fullLine);
+	strcpy(previousColors[next_empty_line], speaker->colour);
 	next_empty_line++;
 	refresh();	
 	sleep(speaker->displayTimeOfDialogue);
