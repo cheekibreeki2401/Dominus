@@ -3,12 +3,12 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include <string.h>
-#include "headers/sharedStructs.h"
-#include "headers/sharedMacros.h"
-#include "headers/dialogue.h"
-#include "headers/stateManager.h"
-#include "headers/fileManagement.h"
-#include "headers/flagTableManage.h"
+#include "../include/sharedStructs.h"
+#include "../include/sharedMacros.h"
+#include "../include/dialogue.h"
+#include "../include/stateManager.h"
+#include "../include/fileManagement.h"
+#include "../include/flagTableManage.h"
 
 WINDOW *w;
 char previousDialogue[20][STR_MAX];

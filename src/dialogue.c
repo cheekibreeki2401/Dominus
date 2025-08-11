@@ -5,12 +5,12 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
-#include "headers/fileManagement.h"
-#include "headers/sharedMacros.h"
-#include "headers/sharedStructs.h"
-#include "headers/display.h"
-#include "headers/flagTableManage.h"
-#include "headers/stateManager.h"
+#include "../include/fileManagement.h"
+#include "../include/sharedMacros.h"
+#include "../include/sharedStructs.h"
+#include "../include/display.h"
+#include "../include/flagTableManage.h"
+#include "../include/stateManager.h"
 
 plainDialogue *plainTxt;
 choiceDialogue *choiceTxt;

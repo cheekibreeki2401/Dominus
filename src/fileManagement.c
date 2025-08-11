@@ -12,7 +12,7 @@
 #include <curl/curl.h>
 #include <zip.h>
 #include <string.h>
-#include "headers/sharedMacros.h"
+#include "../include/sharedMacros.h"
 
 char plainScriptsFilePath[LINUX_MAX];
 char choiceScriptsFilePath[LINUX_MAX];

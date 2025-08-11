@@ -5,12 +5,12 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
-#include "headers/fileManagement.h"
-#include "headers/sharedMacros.h"
-#include "headers/flagTableManage.h"
-#include "headers/sharedStructs.h"
-#include "headers/display.h"
-#include "headers/dialogue.h"
+#include "../include/fileManagement.h"
+#include "../include/sharedMacros.h"
+#include "../include/flagTableManage.h"
+#include "../include/sharedStructs.h"
+#include "../include/display.h"
+#include "../include/dialogue.h"
 
 
 gameState curr_state = GM_ZERO;

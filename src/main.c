@@ -5,11 +5,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <ctype.h>
-#include "headers/fileManagement.h"
-#include "headers/sharedMacros.h"
-#include "headers/dialogue.h"
-#include "headers/display.h"
-#include "headers/stateManager.h"
+#include "../include/fileManagement.h"
+#include "../include/sharedMacros.h"
+#include "../include/dialogue.h"
+#include "../include/display.h"
+#include "../include/stateManager.h"
 
 int main(){
 	getDocumentsFolder();

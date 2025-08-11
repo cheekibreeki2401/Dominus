@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "headers/sharedMacros.h"
+#include "../include/sharedMacros.h"
 int size=0;
 char keys[WIN_MAX][STR_MAX];
 int flags[WIN_MAX];
