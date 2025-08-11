@@ -8,6 +8,7 @@
 #include "headers/dialogue.h"
 #include "headers/stateManager.h"
 #include "headers/fileManagement.h"
+#include "headers/flagTableManage.h"
 
 WINDOW *w;
 char previousDialogue[20][STR_MAX];
@@ -114,7 +115,6 @@ void processInput(char input){
 		case '\n':
 		case ' ':
 			clear();
-			//TODO: Handle flag changes from dialogue
 			for(int i = 0; i < 20; i++){
 				strcpy(previousDialogue[i], "\0");
 				strcpy(previousColors[i], "\0");
@@ -123,6 +123,9 @@ void processInput(char input){
 			strcpy(nextChoiceName, currDecisionChoices[currentChoice]->nextDialogue);
 			nextChoiceType = currDecisionChoices[currentChoice]->nextDialogueType;
 			newDialogueStart = 0;
+			if(currDecisionChoices[currentChoice]->changesFlag){
+				newFlagValue(currDecisionChoices[currentChoice]->changedFlag, currDecisionChoices[currentChoice]->flagValue);	
+			}
 			return;
 			break;
 		case 's':

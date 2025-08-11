@@ -15,6 +15,7 @@ int main(){
 	getDocumentsFolder();
 	initializeDialogueStructs();
 	startTUI();
+	assignGameFlags();
 	strcpy(nextChoiceName, "welcome");
 	gameState initState = GM_MENU;
 	changedGameState(initState);
