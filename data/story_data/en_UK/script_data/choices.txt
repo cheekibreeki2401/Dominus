@@ -1,8 +1,22 @@
 -1# Choice Name # Choice Text # Required Choice (0=No) # Required Choice Name # Required Choice Value # Next Dialogue # Next Dialogue Type # Changes Flag (0=NO) # Changed Flag Name # New Flag Value #
+
+MAIN CHOICES:
 0#exit#End Dialogue#0#ALWAYS_TRUE#1#EXIT#1#0#ALWAYS_TRUE#1#
 1#new_save#New Game#0#ALWAYS_TRUE#1#new_game#1#0#ALWAYS_TRUE#1#
 2#load_game#Load Game#1#SAVE_PRESENT#1#save_pick#2#0#ALWAYS_TRUE#1#
 3#controls#Controls#0#ALWAYS_TRUE#1#control_menu#1#0#ALWAYS_TRUE#1#
-4#quit#Quit Game#0#ALWAYS_TRUE#1#quit_game#1#0#ALWAYS_TRUE#1#
+4#quit#Quit Game#0#ALWAYS_TRUE#1#quit_game#9#0#ALWAYS_TRUE#1#
+
+Waking choices:
 5#wake#Wake up to the voice#0#ALWAYS_TRUE#1#world_of_gods_1#1#0#ALWAYS_TRUE#1#
 6#slumber#Continue to sleep#0#ALWAYS_TRUE#1#angered_gods#1#0#ALWAYS_TRUE#1#
+
+Questioning choices:
+7#insult_sleep#Can't a custodian sleep around here?#0#ALWAYS_TRUE#1#millis_sleepyhead#3#0#ALWAYS_TRUE#1#
+8#insult_focus#You focus on your domains, and I will focus on mine, fuck off.#0#ALWAYS_TRUE#1#ifrit_insulted#3#1#insulted_ifrit#1#
+9#actual_question#Freya, what is this nonsense?#0#ALWAYS_TRUE#1#freya_explains_1#3#0#ALWAYS_TRUE#1#
+
+Responsibility choices:
+10#step_up#How do I fix this issue?#1#insulted_ifrit#0#ifrit_leaves#1#0#ALWAYS_TRUE#1#
+11#step_up_ifrit_angry#How do I fix this issue?#1#insulted_ifrit#1#ifrit_leaves_angrily#1#0#ALWAYS_TRUE#1#
+12#not_problem#Not my problem#0#ALWAYS_TRUE#1#angered_gods#1#0#ALWAYS_TRUE#1#

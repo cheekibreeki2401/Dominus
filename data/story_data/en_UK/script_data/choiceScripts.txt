@@ -1,4 +1,13 @@
 0#default#this should not appear#exit
+
 1#main_menu#Select your option:#new_save#load_game#controls#END
+
 2#control_screen#To play Domninus, use the W and S keys to highlight choices, press enter or space to select them. To bring up the menu, press esc.#exit#END
+
 3#waking_choice#What will you do?#wake#slumber#END
+
+4#questioning_choice#These gods are quite insulting to you at the moment, what will you say?#insult_sleep#insult_focus#actual_question#END
+
+5#responsibility_choice#These gods seem quite distressed, not usual for them... what to do?#step_up#step_up_ifrit_angry#not_problem#END
+
+6#dominus_room_choice#What will you do?#quit#end
