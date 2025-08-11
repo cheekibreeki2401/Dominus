@@ -15,6 +15,6 @@ extern int newDialogueStart;
 void initializeDialogueStructs();
 void speakPlain(char dialogueName[]);
 void speakChoice(char dialogueName[]);
-void speakDialogue(char dialogueName[], int dialogueType);
+void speakDialogue(char dialogueName[], dialogueType typeDialogue);
 
 #endif

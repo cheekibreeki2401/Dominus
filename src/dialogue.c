@@ -25,7 +25,7 @@ int potentialChoices = 0;
 int nextChoiceType = 1;
 char nextChoiceName[STR_MAX];
 
-void speakDialogue(char dialogueName[], int dialogueType);
+void speakDialogue(char dialogueName[], dialogueType typeDialogue);
 
 void makeChoicesStruct(char choiceName[], int position){
 	FILE *choices = fopen(choicesFilePath, "r");
@@ -372,8 +372,8 @@ void speakSpeaker(char dialogueName[]){
 	}
 }
 
-void speakDialogue(char dialogueName[], int dialogueType){
-	if(dialogueType == 9){
+void speakDialogue(char dialogueName[], dialogueType typeDialogue){
+	if(typeDialogue >= TYPE_QUIT){
 		gameState finishGame = GM_FINISH;
 		changedGameState(finishGame);
 		return;
@@ -382,11 +382,11 @@ void speakDialogue(char dialogueName[], int dialogueType){
 		currDecisionChoices[i] = notAChoice;
 	}
 	currDecisionChoices[0]->isAChoice = 0;
-	if(dialogueType == 1){
+	if(typeDialogue == TYPE_PLAIN){
 		speakPlain(dialogueName);
-	} else if(dialogueType == 2){
+	} else if(typeDialogue == TYPE_CHOICE){
 		speakChoice(dialogueName);
-	} else if(dialogueType == 3){
+	} else if(typeDialogue == TYPE_SPEAKER){
 		speakSpeaker(dialogueName);
 	}
 	return;

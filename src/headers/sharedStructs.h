@@ -1,12 +1,21 @@
 #ifndef _shared_Structs
 #define _shared_Structs
 
+typedef enum dialogueType{
+	TYPE_PLAIN = 1,
+	TYPE_CHOICE,
+	TYPE_SPEAKER,
+	TYPE_MENU,
+	TYPE_COMBAT,
+	TYPE_QUIT
+} dialogueType;
+
 typedef struct plainDialogue{
 	int scriptId;
 	char scriptName[256];
 	char text[256];
 	char nextDialogue[256];
-	int nextDialogueType;//1: plain, 2: choice, 3: characters
+	dialogueType nextDialogueType;
 	int displayTimeOfDialogue; //In seconds
 } plainDialogue;
 
@@ -18,7 +27,7 @@ typedef struct choice{
 	int requiresFlag;
 	char requiredFlagName[256];
 	char nextDialogue[256];
-	int nextDialogueType;
+	dialogueType nextDialogueType;
 	int changesFlag;
 	char changedFlag[256];
 	int flagValue;
@@ -40,7 +49,7 @@ typedef struct speakerDialogue{
 	char text[256];
 	int displayTimeOfDialogue;
 	char nextScriptName[256];
-	int nextScriptType;
+	dialogueType nextScriptType;
 } speakerDialogue;
 
 typedef enum gameState{
