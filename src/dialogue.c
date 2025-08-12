@@ -15,6 +15,7 @@
 plainDialogue *plainTxt;
 choiceDialogue *choiceTxt;
 speakerDialogue *speaker;
+itemAcquiredDialogue *itemAcq;
 int newDialogueStart = 0;
 char previousDialogueChain[STR_MAX];
 choice *currDecisionChoices[10];
@@ -124,6 +125,7 @@ void initializeDialogueStructs(){
 	plainTxt=malloc(sizeof(plainDialogue));
 	choiceTxt=malloc(sizeof(choiceDialogue));
 	speaker=malloc(sizeof(speakerDialogue));
+	itemAcq=malloc(sizeof(itemAcquiredDialogue));
 	return;
 }
 
@@ -338,25 +340,21 @@ void speakSpeaker(char dialogueName[]){
 				case 9:
 					if(hasDialogue && !useAltText){
 						strcpy(speaker->nextScriptName, token);
-						strcpy(nextChoiceName, token);
 					}
 					break;
 				case 10:
 					if(hasDialogue && !useAltText){
 						speaker->nextScriptType = atoi(token);
-						nextChoiceType = atoi(token);
 					}
 					break;
 				case 11:
 					if(hasDialogue && useAltText){
 						strcpy(speaker->nextScriptName, token);
-						strcpy(nextChoiceName, token);
 					}
 					break;
 				case 12:
 					if(hasDialogue && useAltText){
 						speaker->nextScriptType = atoi(token);
-						nextChoiceType = atoi(token);
 					}
 					break;
 			}
@@ -372,6 +370,57 @@ void speakSpeaker(char dialogueName[]){
 	}
 }
 
+void speakItemAcquired(char dialogueName[]){
+	FILE *acquiredItemFile = fopen(acquiredItemFilePath, "r");
+	if(!acquiredItemFile){
+		return;
+	}
+	char line[STR_MAX*2];
+	int foundItemGet = 0;
+	while(fgets(line, sizeof(line), acquiredItemFile)){
+		if(foundItemGet){
+			break;
+		}
+		char line_cpy[STR_MAX*2];
+		strcpy(line_cpy, line);
+		int token_ctr = 0;
+		int temp_id = 0;
+		char *token = strtok(line_cpy, "#");
+		while(token!=NULL){
+			switch(token_ctr){
+				case 0:
+					temp_id = atoi(token);
+					break;
+				case 1:
+					if(!strcmp(dialogueName, token)){
+						itemAcq->acquired_id = temp_id;	
+						foundItemGet = 1;
+					}
+					break;
+				case 2:
+					if(foundItemGet){
+						strcpy(itemAcq->item_acquired, token);
+					}
+					break;
+				case 3:
+					if(foundItemGet){
+						itemAcq->quantity = atoi(token);
+					}
+					break;
+			}
+			token_ctr++;
+			token = strtok(NULL, "#");
+		}
+	}
+	if(foundItemGet){
+		fclose(acquiredItemFile);
+		printItemGet();
+	} else {
+		fclose(acquiredItemFile);
+	}
+	return;
+}
+
 void speakDialogue(char dialogueName[], dialogueType typeDialogue){
 	if(typeDialogue >= TYPE_QUIT){
 		gameState finishGame = GM_FINISH;
@@ -382,12 +431,21 @@ void speakDialogue(char dialogueName[], dialogueType typeDialogue){
 		currDecisionChoices[i] = notAChoice;
 	}
 	currDecisionChoices[0]->isAChoice = 0;
-	if(typeDialogue == TYPE_PLAIN){
-		speakPlain(dialogueName);
-	} else if(typeDialogue == TYPE_CHOICE){
-		speakChoice(dialogueName);
-	} else if(typeDialogue == TYPE_SPEAKER){
-		speakSpeaker(dialogueName);
+	switch(typeDialogue){
+		case TYPE_PLAIN:
+			speakPlain(dialogueName);
+			break;
+		case TYPE_CHOICE:
+			speakChoice(dialogueName);
+			break;
+		case TYPE_SPEAKER:
+			speakSpeaker(dialogueName);
+			break;
+		case TYPE_ITEM_ACQUIRED:
+			speakItemAcquired(dialogueName);
+			break;
+		default:
+			break;
 	}
 	return;
 }

@@ -8,5 +8,6 @@ void endTUI();
 void printStaticContent(int clear);
 void printChoiceContent();
 void printSpeakerContent();
+void printItemGet();
 
 #endif

@@ -1,3 +1,4 @@
 ALWAYS_TRUE#1#
 SAVE_PRESENT#0#
 insulted_ifrit#0#
+inspected_bed#0#

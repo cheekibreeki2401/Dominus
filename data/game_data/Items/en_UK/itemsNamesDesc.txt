@@ -1,0 +1,3 @@
+internal item name # item name # item Description#
+
+item_small_vial#Small Health Vial#A simple vial made from the healing knowledge of Millis, goddess of the Wind.#

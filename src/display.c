@@ -60,7 +60,6 @@ void printStaticContent(int clear){
 		clear();
 		return;
 	}
-	newDialogueStart = 1;
 	max_choices = 0;
 	wattron(w, COLOR_PAIR(4));
 	currentChoice = 0;
@@ -162,7 +161,61 @@ void printSpeakerContent(){
 	strcpy(previousDialogue[next_empty_line], fullLine);
 	strcpy(previousColors[next_empty_line], speaker->colour);
 	next_empty_line++;
+	strcpy(nextChoiceName, speaker->nextScriptName);
+	nextChoiceType = speaker->nextScriptType;
+	newDialogueStart = 0;
 	refresh();	
 	sleep(speaker->displayTimeOfDialogue);
 	return;
+}
+
+void printItemGet(){
+	clear();
+	max_choices = 0;
+	wattron(w, COLOR_PAIR(0));
+	char fullLine[STR_MAX];
+	strcpy(fullLine, "You have found ");
+	FILE *itemNameFile = fopen(itemNameFilePath, "r");
+	char itemName[STR_MAX];
+	if(!itemNameFile){
+		return;
+	}
+	char line[STR_MAX*2];
+	int foundItemName = 0;
+	while(fgets(line, sizeof(line), itemNameFile)){
+		if(foundItemName){
+			break;
+		}
+		char line_cpy[STR_MAX*2];
+		strcpy(line_cpy, line);
+		char *token = strtok(line_cpy, "#");
+		while(token!=NULL){
+			if(!strcmp(itemAcq->item_acquired, token)){
+				token = strtok(NULL, "#");
+				strcpy(itemName, token);
+				foundItemName = 1;
+			} else {
+				break;
+			}
+		}
+	}
+	fclose(itemNameFile);
+	if(foundItemName){
+		strcat(fullLine, itemName);
+		strcat(fullLine, "x");
+		char quantStr[10];
+		sprintf(quantStr, "%d", itemAcq->quantity);
+		strcat(fullLine, quantStr);
+		printw("%s\n\n\n>OK\n", fullLine);
+		refresh();
+		getch();
+		strcpy(nextChoiceName, "EXIT");
+		nextChoiceType = 1;
+		newDialogueStart = 0;
+		//TODO: Add the new item to our inventory
+		return;
+	} else {
+		exit(1);
+		return;
+	}
 }

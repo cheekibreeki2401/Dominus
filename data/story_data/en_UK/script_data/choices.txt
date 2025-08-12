@@ -17,6 +17,12 @@ Questioning choices:
 9#actual_question#Freya, what is this nonsense?#0#ALWAYS_TRUE#1#freya_explains_1#3#0#ALWAYS_TRUE#1#
 
 Responsibility choices:
-10#step_up#How do I fix this issue?#1#insulted_ifrit#0#ifrit_leaves#1#0#ALWAYS_TRUE#1#
-11#step_up_ifrit_angry#How do I fix this issue?#1#insulted_ifrit#1#ifrit_leaves_angrily#1#0#ALWAYS_TRUE#1#
+10#step_up#How do I fix this issue?#1#insulted_ifrit#0#ifrit_leaves#3#0#ALWAYS_TRUE#1#
+11#step_up_ifrit_angry#How do I fix this issue?#1#insulted_ifrit#1#ifrit_leaves_angrily#3#0#ALWAYS_TRUE#1#
 12#not_problem#Not my problem#0#ALWAYS_TRUE#1#angered_gods#1#0#ALWAYS_TRUE#1#
+
+Dominus Room choices:
+13#dom_room_freya#Speak to Freya#0#ALWAYS_TRUE#1#freya_dom_room_start#3#0#ALWAYS_TRUE#1#
+14#dom_room_millis#Speak to Millis#0#ALWAYS_TRUE#1#millis_dom_room_start#3#0#ALWAYS_TRUE#1#
+15#dom_room_bed#Inspect the bed#1#inspected_bed#0#inspect_bed#4#1#inspected_bed#1#
+16#dom_room_door#Exit your room#0#ALWAYS_TRUE#1#bedroom_hall#1#0#ALWAYS_TRUE#1#

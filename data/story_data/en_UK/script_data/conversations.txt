@@ -7,12 +7,14 @@ MILLIS DIALOGUE:
 
 IFRIT DIALOGUE:
 0#ifrit_waking#???#RED#Millis, as soon as the planet was created, he slumbered, letting the mortals do whatever they wanted#7#ALWAYS_TRUE#0#none#freya_waking#3#bad_dialogue#9#
-1#ifrit_insulted#Ifrit#RED#You ungrateful swine! I will take great pleasure casting you into a mortal's bo-#4#ALWAYS_TRUE#0#none#freya_steps_in#1#bad_dialogue#9#
-2#ifrit_angered_reply#Ifrit#RED#What you will do is what we tell you to do, lowly planetary god... custodian...#5#ALWAYS_TRUE#0#none#ifrit_leaves#1#bad_dialogue#9#
+1#ifrit_leaves#Ifrit#RED#*Huffs and walks out of the door in the room*#7#ALWAYS_TRUE#0#none#freya_conclusion#3#bad_dialgoue#9#
+2#ifrit_insulted#Ifrit#RED#You ungrateful swine! I will take great pleasure casting you into a mortal's bo-#4#ALWAYS_TRUE#0#none#freya_steps_in#1#bad_dialogue#9#
+3#ifrit_angered_reply#Ifrit#RED#What you will do is what we tell you to do, lowly planetary god... custodian...#5#ALWAYS_TRUE#0#none#ifrit_leaves#3#bad_dialogue#9#
+4#ifrit_leaves_angrily#Ifrit#RED#*Walks over to you, tries to intimidate you with a harsh stare*#7#ALWAYS_TRUE#0#none#ifrit_angered_reply#3#1#bad_dialogue#9#
 
 FREYA_DIALOGUE:
 0#freya_waking#???#BLUE#And after all we had done to give him a planet to rule over, Ifrit. Such... unkindness.#5#ALWAYS_TRUE#0#none#questioning_choice#2#bad_dialogue#9#
 1#freya_explains_1#Freya#BLUE#Dominus... your world is in peril. During your slumber, the mortals of your planet has taken to worshipping us instead of you.#7#ALWAYS_TRUE#0#none#freya_explains_2#3#bad_dialogue#9#
 2#freya_explains_2#Freya#BLUE#This would not be an issue, if it weren't for the fact we can only bless so many mortals, and with Ifrit and I being the gods of the Sun and Moon respectively...#10#ALWAYS_TRUE#0#none#freya_explains_3#3#bad_dialogue#9#
 3#freya_explains_3#Freya#BLUE#... we are stretched thin, causing panic to the mortals of your world. You... need to fix this.#6#ALWAYS_TRUE#0#none#responsibility_choice#2#bad_dialogue#9#
-4#freya_conclusion#Freya#BLUE#He is never happy... when you are ready to help, see Ifrit. If you need any more information on the state of your world, talk to me or Millis#7#ALWAYS_TRUE#0#none#dominus_room#1#bad_dialogue#9#
+4#freya_conclusion#Freya#BLUE#*Sighs* He is never happy... when you are ready to help, see Ifrit. If you need any more information on the state of your world, talk to me or Millis#7#ALWAYS_TRUE#0#none#dominus_room#1#bad_dialogue#9#

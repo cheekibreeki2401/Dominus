@@ -19,6 +19,8 @@ char choiceScriptsFilePath[LINUX_MAX];
 char choicesFilePath[LINUX_MAX];
 char flagFilePath[LINUX_MAX];
 char speakerScriptsFilePath[LINUX_MAX];
+char acquiredItemFilePath[LINUX_MAX];
+char itemNameFilePath[LINUX_MAX];
 
 const char *getUserName(){
 	#ifdef __linux__
@@ -66,11 +68,15 @@ int getDocumentsFolder(){
 	strcpy(choicesFilePath, fullDirectory);
 	strcpy(flagFilePath, fullDirectory);
 	strcpy(speakerScriptsFilePath, fullDirectory);
+	strcpy(acquiredItemFilePath, fullDirectory);
+	strcpy(itemNameFilePath, fullDirectory);
 	strcat(plainScriptsFilePath, "/story_data/en_UK/script_data/plain.txt");
 	strcat(choiceScriptsFilePath,"/story_data/en_UK/script_data/choiceScripts.txt");
 	strcat(choicesFilePath,"/story_data/en_UK/script_data/choices.txt");
 	strcat(speakerScriptsFilePath, "/story_data/en_UK/script_data/conversations.txt");
 	strcat(flagFilePath, "/game_data/FLAGS/storyFlags.txt");
+	strcat(acquiredItemFilePath, "/story_data/en_UK/script_data/item_get.txt");
+	strcat(itemNameFilePath, "/game_data/Items/en_UK/itemsNamesDesc.txt");
 	return 0;
 }
 

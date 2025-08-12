@@ -1,0 +1,4 @@
+-1 # item_get # item received # quantity #
+
+Bed:
+0#inspect_bed#item_small_vial#1#

@@ -24,10 +24,6 @@ Waking up:
 Freya steps in:
 11#freya_steps_in#The one in blue, Freya, puts a hand on Ifrit's shoulder, making him step back.#freya_explains_1#3#4#
 
-Ifrit leaving:
-12#ifrit_leaves#Ifrit huffs and walks away, the other gods looking at him as he leaves. Freya sighs.#freya_conclusion#3#7#
-13#ifrit_leaves_angrily#Ifrit strides over to you, looking you dead in the eyes with his bright orange ones, piercing your godly figure with hatred.#ifrit_angered_reply#3#7#
-
 Dominus Room:
-14#dominus_room#You stand in your room in the temple. Inside of this room is currently Freya, the goddess of the Moon and Millis, goddess of the Wind.#dominus_room_door#1#5#
-15#dominus_room_door#You see a door and your bed.#dominus_room_choice#2#3
+12#dominus_room#You stand in your room in the temple. Inside of this room is currently Freya, the goddess of the Moon and Millis, goddess of the Wind.#dominus_room_door#1#5#
+13#dominus_room_door#You see a door and your bed.#dominus_room_choice#2#3

@@ -10,4 +10,4 @@
 
 5#responsibility_choice#These gods seem quite distressed, not usual for them... what to do?#step_up#step_up_ifrit_angry#not_problem#END
 
-6#dominus_room_choice#What will you do?#quit#end
+6#dominus_room_choice#What will you do?#dom_room_freya#dom_room_millis#dom_room_bed#dom_room_door#quit#end

@@ -1,0 +1,4 @@
+-1 # internal_item_name # item_target # number of targets #item_effect # item_value #
+
+Small health vial:
+0#item_small_vial#1#1#0#10#

@@ -5,6 +5,7 @@
 extern plainDialogue *plainTxt;
 extern choiceDialogue *choiceTxt;
 extern speakerDialogue *speaker;
+extern itemAcquiredDialogue *itemAcq;
 extern choice *currDecisionChoices[10];
 extern char lastLineUpTo[STR_MAX];
 extern int numChoices;

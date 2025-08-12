@@ -54,15 +54,15 @@ void returnToPreviousDialogue(){
 		endTUI();
 		exit(1);//Gives a clear sign when hitting outside of boundaries
 	}
+	strcpy(nextChoiceName, previousDialogues[currentEmptyDialogue-1]);
+	nextChoiceType = 1;
+	newDialogueStart = 0;
 	currentEmptyDialogue--;
 	popDialogue(currentEmptyDialogue);
 	if(currentEmptyDialogue == 0){
 		endTUI();
 		exit(1);
 	}
-	strcpy(nextChoiceName, previousDialogues[currentEmptyDialogue-1]);
-	nextChoiceType = 1;
-	newDialogueStart = 0;
 	return;
 }
 
