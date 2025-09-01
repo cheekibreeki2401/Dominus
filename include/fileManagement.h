@@ -8,6 +8,7 @@ extern char flagFilePath[LINUX_MAX];
 extern char speakerScriptsFilePath[LINUX_MAX];
 extern char acquiredItemFilePath[LINUX_MAX];
 extern char itemNameFilePath[LINUX_MAX];
+extern char menuFilePath[LINUX_MAX];
 char *getUserName();
 int isFolderCreated(char filepath[]);
 int *getDocumentsFolder();

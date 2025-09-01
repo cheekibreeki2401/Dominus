@@ -14,6 +14,8 @@
 #include <string.h>
 #include "../include/sharedMacros.h"
 
+const int MAX_SAVES = 100;
+
 char plainScriptsFilePath[LINUX_MAX];
 char choiceScriptsFilePath[LINUX_MAX];
 char choicesFilePath[LINUX_MAX];
@@ -21,6 +23,13 @@ char flagFilePath[LINUX_MAX];
 char speakerScriptsFilePath[LINUX_MAX];
 char acquiredItemFilePath[LINUX_MAX];
 char itemNameFilePath[LINUX_MAX];
+char saveFilePath[LINUX_MAX];
+char menuFilePath[LINUX_MAX];
+int cur_saves = 0;
+int loadedSaves = 0;
+char **saveFileNames;
+char saveFileToLoad[LINUX_MAX];
+
 
 const char *getUserName(){
 	#ifdef __linux__
@@ -43,8 +52,39 @@ int isFolderCreated(const char* restrict directory){
 		return 1;
 	} else {
 		closedir(dir);
-		return ERR_NA;
+		return 0;
 	}
+}
+
+char *getSaveFileToLoad(int i){
+	strcpy(saveFileToLoad, saveFileNames[i]);
+	return saveFileToLoad;
+}
+
+char **getSaveFiles(const char* restrict directory){
+	if(!isFolderCreated(directory)){
+		return NULL;	
+	}
+	if(loadedSaves){
+		return saveFileNames;
+	}
+	saveFileNames = (char **)malloc(MAX_SAVES * sizeof(char*));
+	for(int i = 0; i < MAX_SAVES; i++){
+		saveFileNames[i] = malloc(STR_MAX * sizeof(char));
+	}
+	DIR *dir = opendir(directory);
+	struct dirent *entry;
+	while((entry = readdir(dir)) != NULL){
+		if(strstr(entry->d_name, ".txt") && cur_saves <= MAX_SAVES){
+			strcpy(saveFileNames[cur_saves], entry->d_name);
+			cur_saves += 1;
+		}
+	}
+	if(cur_saves > 0){
+		loadedSaves = 1;
+		return saveFileNames;
+	}
+	return NULL;
 }
 
 int getDocumentsFolder(){
@@ -70,6 +110,8 @@ int getDocumentsFolder(){
 	strcpy(speakerScriptsFilePath, fullDirectory);
 	strcpy(acquiredItemFilePath, fullDirectory);
 	strcpy(itemNameFilePath, fullDirectory);
+	strcpy(menuFilePath, fullDirectory);
+	strcpy(saveFilePath, fullDirectory);
 	strcat(plainScriptsFilePath, "/story_data/en_UK/script_data/plain.txt");
 	strcat(choiceScriptsFilePath,"/story_data/en_UK/script_data/choiceScripts.txt");
 	strcat(choicesFilePath,"/story_data/en_UK/script_data/choices.txt");
@@ -77,6 +119,8 @@ int getDocumentsFolder(){
 	strcat(flagFilePath, "/game_data/FLAGS/storyFlags.txt");
 	strcat(acquiredItemFilePath, "/story_data/en_UK/script_data/item_get.txt");
 	strcat(itemNameFilePath, "/game_data/Items/en_UK/itemsNamesDesc.txt");
+	strcat(menuFilePath, "/game_data/menu/en_UK/menu.txt");
+	strcat(saveFilePath, "/saves");
 	return 0;
 }
 

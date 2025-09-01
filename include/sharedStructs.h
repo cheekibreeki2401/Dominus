@@ -90,4 +90,13 @@ typedef struct gmItem{
 	effects item_effect;
 	int effect_value;
 } gmItem;
+
+typedef struct menus{
+	int scriptID;
+	char scriptName[STR_MAX];
+	char menuType[STR_MAX];
+	int changesFlag;
+	char flagName[STR_MAX];
+	int newFlagState;
+} menus;
 #endif

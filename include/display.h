@@ -9,5 +9,6 @@ void printStaticContent(int clear);
 void printChoiceContent();
 void printSpeakerContent();
 void printItemGet();
+void printMenu();
 
 #endif

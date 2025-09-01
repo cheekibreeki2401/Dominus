@@ -219,3 +219,9 @@ void printItemGet(){
 		return;
 	}
 }
+
+void printMenu(){
+	if(!strcmp(menuTxt->menuType, "LOADFILES")){
+		//TODO: Handle loading save files
+	}
+}

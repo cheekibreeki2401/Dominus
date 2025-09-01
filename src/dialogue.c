@@ -16,6 +16,7 @@ plainDialogue *plainTxt;
 choiceDialogue *choiceTxt;
 speakerDialogue *speaker;
 itemAcquiredDialogue *itemAcq;
+menus *menuTxt;
 int newDialogueStart = 0;
 char previousDialogueChain[STR_MAX];
 choice *currDecisionChoices[10];
@@ -126,6 +127,7 @@ void initializeDialogueStructs(){
 	choiceTxt=malloc(sizeof(choiceDialogue));
 	speaker=malloc(sizeof(speakerDialogue));
 	itemAcq=malloc(sizeof(itemAcquiredDialogue));
+	menuTxt=malloc(sizeof(menus));
 	return;
 }
 
@@ -421,6 +423,64 @@ void speakItemAcquired(char dialogueName[]){
 	return;
 }
 
+void speakMenu(char dialogueName[]){
+	FILE *menuFile = fopen(menuFilePath, "r");
+	if(!menuFile){
+		return;
+	}
+	char line[STR_MAX*2];
+	int foundMenu = 0;
+	while(fgets(line, sizeof(line), menuFile)){
+		if(foundMenu){
+			break;
+		}
+		char line_cpy[STR_MAX*2];
+		strcpy(line_cpy, line);
+		int token_ctr = 0;
+		int temp_id = 0;
+		char *token = strtok(line_cpy, "#");
+		while(token!=NULL){
+			switch(token_ctr){
+				case 0:
+					temp_id = atoi(token);
+					break;
+				case 1:
+					if(!strcmp(dialogueName, token)){
+						menuTxt->scriptID = temp_id;
+						strcpy(menuTxt->scriptName, token);
+						foundMenu = 1;			
+					}
+					break;
+				case 2:
+					if(foundMenu){
+						strcpy(menuTxt->menuType, token);
+					}
+					break;
+				case 3:
+					if(foundMenu){
+						menuTxt->changesFlag = atoi(token);
+					}
+					break;
+				case 4:
+					if(foundMenu && menuTxt->changesFlag){
+						strcpy(menuTxt->flagName, token);
+					}
+					break;
+				case 5:
+					if(foundMenu && menuTxt->changesFlag){
+						menuTxt->newFlagState = atoi(token);
+					}
+					break;
+			}
+		}
+	}
+	fclose(menuFile);
+	if(foundMenu){
+		printMenu();
+	}
+	return;
+}
+
 void speakDialogue(char dialogueName[], dialogueType typeDialogue){
 	if(typeDialogue >= TYPE_QUIT){
 		gameState finishGame = GM_FINISH;
@@ -443,6 +503,9 @@ void speakDialogue(char dialogueName[], dialogueType typeDialogue){
 			break;
 		case TYPE_ITEM_ACQUIRED:
 			speakItemAcquired(dialogueName);
+			break;
+		case TYPE_MENU:
+			speakMenu(dialogueName);
 			break;
 		default:
 			break;
